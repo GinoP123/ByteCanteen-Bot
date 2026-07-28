@@ -41,15 +41,16 @@ for _ in range(7):
             continue
         elif dish['description'] == '':
             dish['description'] = 'Missing'
-        booking_options.append((dish['name'], dish['description']))
+        booking_options.append((dish['name'], dish['truck'], dish['description']))
 
     if booking_options:
         choice = str(random.randint(1, len(booking_options)))
         prompt = f"{settings.preferences}\n\nHere are the choices: \n"
-        for i, (booking_option, booking_description) in enumerate(booking_options, start=1):
-            prompt += f"{i}.) {booking_option}\n\tDescription: {booking_description}\n\n"
+        for i, (booking_option, booking_truck, booking_description) in enumerate(booking_options, start=1):
+            prompt += f"{i}.) {booking_option}\n\tTruck: {booking_truck}\n\tDescription: {booking_description}\n\n"
         prompt += f"Please output only the choice number between {1} and {len(booking_options)} with no explanation and no formatting."
-
+        prompt = prompt.replace('"', '').replace("'", '')
+        
         output = sp.run(f"{settings.llm_path} '''{prompt}'''", 
             capture_output=True, shell=True).stdout.decode().strip()
         output = output.replace(')', '').replace('(', '').replace('.', '')
