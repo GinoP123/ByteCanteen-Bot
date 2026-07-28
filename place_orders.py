@@ -53,7 +53,7 @@ for _ in range(7):
         
         output = sp.run(f"{settings.llm_path} '''{prompt}'''", 
             capture_output=True, shell=True).stdout.decode().strip()
-        output = output.replace(')', '').replace('(', '').replace('.', '')
+        output = output.replace(')', '').replace('(', '').replace('.', '').strip()
 
         if output.isnumeric() and 1 <= ast.literal_eval(output) <= len(booking_options):
             choice = output
