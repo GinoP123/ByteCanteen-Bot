@@ -1,6 +1,7 @@
 # Downloading Repo
 ```
 git clone https://github.com/GinoP123/ByteCanteen-Bot.git
+cd ByteCanteen-Bot
 unzip scripts.zip
 ```
 
@@ -43,7 +44,9 @@ brew install mklement0/ttab/ttab
 https://www.sublimetext.com/download
 
 # Adding to Crontab
+```
 crontab crontab.txt
+```
 
 ## Checking Installation
 ```
