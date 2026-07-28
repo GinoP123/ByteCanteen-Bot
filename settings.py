@@ -10,7 +10,7 @@ with open(preferences_path) as infile:
 llm_path = './llm.sh'
 open_path = "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 
-meal_type = 'dinner'
+meal_type = 'lunch'
 location = "1199Coleman"
 date_format = '%Y-%m-%d'
 valid_days_threshold = 0
