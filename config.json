@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "description": "ByteCanteen menu config - edit buildings to adapt to any ByteDance office (incl. overseas, e.g. San Jose).",
+  "buildings": [
+    {
+      "key": "1199Coleman",
+      "mdmCode": "MDBD00000720",
+      "name": "1199 Coleman",
+      "city": "San Jose",
+      "campus": "Coleman"
+    },
+    {
+      "key": "1143Coleman",
+      "mdmCode": "MDBD00000839",
+      "name": "1143 Coleman",
+      "city": "San Jose",
+      "campus": "Coleman"
+    }
+  ],
+  "defaults": {
+    "meal": "lunch",
+    "lookbackDays": 7,
+    "defaultBuilding": "1199Coleman",
+    "sessionTtlDays": 7,
+    "sessionWarnDays": 2,
+    "diet": {
+      "preferences": [],
+      "allergens": [],
+      "religious": []
+    },
+    "foodTruckOrdering": {
+      "preferences": ""
+    }
+  }
+}

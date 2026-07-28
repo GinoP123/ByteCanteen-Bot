@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ollama run qwen2.5:7b "$@"
+
