@@ -43,13 +43,8 @@ brew install mklement0/ttab/ttab
 # Install Sublime
 https://www.sublimetext.com/download
 
-# Adding to Crontab
-```
-crontab crontab.txt
-```
-
 ## Checking Installation
 ```
-./installer.sh
+/bin/bash ./installer.sh
 ./place_orders.py
 ```
