@@ -50,7 +50,6 @@ crontab crontab.txt
 
 ## Checking Installation
 ```
-./check_token.sh
+./installer.sh
 ./place_orders.py
-crontab -l
 ```
