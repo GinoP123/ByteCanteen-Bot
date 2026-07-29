@@ -43,7 +43,7 @@ brew install mklement0/ttab/ttab
 # Install Sublime
 https://www.sublimetext.com/download
 
-## Checking Installation
+# Finishing Installation
 ```
 /bin/bash ./installer.sh
 ./place_orders.py
