@@ -24,8 +24,7 @@ brew install node
 
 # Installing Ollama
 ```
-brew install ollama
-brew services start ollama
+curl -fsSL https://ollama.com/install.sh | sh
 ./llm.sh hi
 ```
 
