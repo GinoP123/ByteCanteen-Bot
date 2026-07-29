@@ -1,2 +1,2 @@
-*/30 * * * * /Users/bytedance/Scripts/ByteCanteen/check_token.sh
-0 10 * * 1 /opt/homebrew/bin/ttab /Users/bytedance/Scripts/ByteCanteen/place_orders.py
+*/30 * * * * "<PATH_TO_REPO>/check_token.sh"
+0 10 * * 1 /opt/homebrew/bin/ttab "<PATH_TO_REPO>/place_orders.py"
