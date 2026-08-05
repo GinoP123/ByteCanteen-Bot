@@ -4,6 +4,7 @@ config_path = "config.json"
 session_path = ".session.json"
 preferences_path = "preferences.md"
 commands_run_path = "commands_run.sh"
+updates_path = 'updates.md'
 
 with open(preferences_path) as infile:
     preferences = f"{infile.read()}".replace("'", '').replace('"', '')
@@ -12,8 +13,7 @@ llm_path = './llm.sh'
 open_path = "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 node_path = "/opt/homebrew/bin/node"
 
-#### FIX
-meal_type = 'lunch'
+meal_type = 'dinner'
 location = "1199Coleman"
 date_format = '%Y-%m-%d'
 valid_days_threshold = 0

@@ -1,7 +1,8 @@
 ByteCanteen_dir="/Users/bytedance/ByteCanteen-Bot"
 
 0 10 * * 1 "$ByteCanteen_dir/commands_run.sh" >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1; echo '#!/bin/bash' > "$ByteCanteen_dir/commands_run.sh"
-55 9 * * 1 /opt/homebrew/bin/ttab "$ByteCanteen_dir/place_orders.py"
-0 10 * * 1 /opt/homebrew/bin/ttab "$ByteCanteen_dir/place_orders.py"
-1,51 * * * * "$ByteCanteen_dir/check_token.sh" >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1
-2,52 * * * * git pull origin main >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1
+55 9 * * 1 "$ByteCanteen_dir/place_orders.py" >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1
+* * * * * "$ByteCanteen_dir/place_orders.py" >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1
+1,31 * * * * "$ByteCanteen_dir/check_token.sh" >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1
+2,32 * * * * cd "$ByteCanteen_dir"; git pull origin main >> "$ByteCanteen_dir/cron_log/log.txt" 2>&1
+39 15 * * * /Users/bytedance/Scripts/AlarmSetter/main.sh unset 2> /dev/null

@@ -29,10 +29,12 @@ preparing_dishes_file = open(settings.commands_run_path, 'w')
 preparing_dishes_file.write('#!/bin/bash\n')
 
 
+updates = open(settings.updates_path, 'w')
+updates.write(f'# {str(datetime.now().date())}\n\n')
+
 
 for _ in range(7):
     date = curr_date.strftime(settings.date_format)
-    print(date)
     curr_date += timedelta(days=1)
 
     command = f"cd '{directory}'; {settings.node_path} scripts/foodtruck.mjs list '{date}' {settings.meal_type} {settings.location}"
@@ -41,10 +43,10 @@ for _ in range(7):
 
     date = dishes_day['mealDate']
     if dishes_day['lifecycleStage'] != 'BOOKING' and not dishes_day['items']:
-        print(f"{dishes_day['lifecycleStage']}\n")
+        updates.write(f"### {date}: {dishes_day['lifecycleStage']}\n\n")
         continue
     elif dishes_day['hadOrdered'] == True:
-        print(f"Already Ordered {dishes_day['bookedOrderId']}\n")
+        updates.write(f"### {date}: Already Ordered {dishes_day['bookedOrderInfo']['foodName']}\n\n")
         continue
 
     booking_options = []
@@ -70,7 +72,7 @@ for _ in range(7):
         if output.isnumeric() and 1 <= ast.literal_eval(output) <= len(booking_options):
             choice = output
         else:
-            print("ERROR: MODEL OUTPUT FAILED", output)
+            updates.write(f"### {date}: ERROR MODEL OUTPUT FAILED\n", output)
 
         choice = booking_options[ast.literal_eval(choice)-1][0]
 
@@ -78,11 +80,17 @@ for _ in range(7):
 
         if dishes_day['lifecycleStage'] == 'BOOKING':
             output = sp.run(command, capture_output=True, shell=True).stdout.decode()
-            print(f"Submitted {choice} on {date}\n")
+            updates.write(f'### {date}: Submitted {choice} on {date}\n\n')
         else:
             preparing_dishes_file.write(f"{command}\n\n")
-            print(f"Cached {choice}; Will Submit in ~5 min\n")
+            updates.write(f"### {date}: Cached {choice}; Will Submit in ~5 min\n\n")
     else:
-        print("No Booking Options\n")
+        updates.write(f"### {date}: No Booking Options\n\n")
+
 
 preparing_dishes_file.close()
+updates.close()
+
+# sp.run(f"cd '{directory}'; '{settings.open_path}' '{settings.updates_path}'", shell=True)
+
+
