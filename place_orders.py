@@ -8,9 +8,10 @@ import random
 import ast
 from datetime import datetime, timedelta
 from tqdm import tqdm
+import time
 
 if __name__ == "__main__":
-    directory = os.path.dirname(sys.argv[0])
+    directory = os.path.realpath(os.path.dirname(sys.argv[0]))
     os.chdir(directory)
 
 import settings
@@ -18,21 +19,32 @@ import settings
 curr_date = datetime.now()
 curr_date += timedelta(weeks=1)
 
+### Waiting For Cached Dishes To Run Quickly
+if os.path.exists(settings.commands_run_path) and datetime.fromtimestamp(os.path.getmtime(settings.commands_run_path)).date() == datetime.now().date():
+    cached_dishes = int(sp.run(f"wc -l '{settings.commands_run_path}'", shell=True, capture_output=True).stdout.decode().strip().split()[0])
+    if cached_dishes > 2:
+        time.sleep(30)
+
+preparing_dishes_file = open(settings.commands_run_path, 'w')
+preparing_dishes_file.write('#!/bin/bash\n')
+
+
+
 for _ in range(7):
     date = curr_date.strftime(settings.date_format)
     print(date)
     curr_date += timedelta(days=1)
 
-    command = f"cd '{directory}'; node scripts/foodtruck.mjs list '{date}' {settings.meal_type} {settings.location}"
+    command = f"cd '{directory}'; {settings.node_path} scripts/foodtruck.mjs list '{date}' {settings.meal_type} {settings.location}"
     dishes_day = sp.run(command, capture_output=True, shell=True).stdout.decode()
     dishes_day = json.loads(dishes_day)
 
     date = dishes_day['mealDate']
-    if dishes_day['lifecycleStage'] != 'BOOKING':
+    if dishes_day['lifecycleStage'] != 'BOOKING' and not dishes_day['items']:
         print(f"{dishes_day['lifecycleStage']}\n")
         continue
     elif dishes_day['hadOrdered'] == True:
-        print("Exiting Early, Already Ordered\n")
+        print(f"Already Ordered {dishes_day['bookedOrderId']}\n")
         continue
 
     booking_options = []
@@ -62,10 +74,15 @@ for _ in range(7):
 
         choice = booking_options[ast.literal_eval(choice)-1][0]
 
-        command = f"cd '{directory}'; node scripts/foodtruck.mjs order --date {date} --meal {settings.meal_type} --select '{choice}' --building {settings.location}"
-        output = sp.run(command, capture_output=True, shell=True).stdout.decode()
-        print(f"Submitted {choice} on {date}\n")
+        command = f"cd '{directory}'; {settings.node_path} scripts/foodtruck.mjs order --date {date} --meal {settings.meal_type} --select '{choice}' --building {settings.location}"
+
+        if dishes_day['lifecycleStage'] == 'BOOKING':
+            output = sp.run(command, capture_output=True, shell=True).stdout.decode()
+            print(f"Submitted {choice} on {date}\n")
+        else:
+            preparing_dishes_file.write(f"{command}\n\n")
+            print(f"Cached {choice}; Will Submit in ~5 min\n")
     else:
         print("No Booking Options\n")
 
-
+preparing_dishes_file.close()
