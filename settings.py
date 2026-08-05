@@ -13,7 +13,7 @@ llm_path = './llm.sh'
 open_path = "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 node_path = "/opt/homebrew/bin/node"
 
-meal_type = 'dinner'
+meal_type = 'lunch'
 location = "1199Coleman"
 date_format = '%Y-%m-%d'
 valid_days_threshold = 0
