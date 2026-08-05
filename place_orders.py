@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
 import settings
 
+
 curr_date = datetime.now()
 curr_date += timedelta(weeks=1)
 
@@ -36,6 +37,10 @@ updates.write(f'# {str(datetime.now().date())}\n\n')
 for _ in range(7):
     date = curr_date.strftime(settings.date_format)
     curr_date += timedelta(days=1)
+
+    if not os.path.exists(settings.session_path):
+        updates.write(f"### {date}: ERROR: No Lark Session Found, Please Update Lark Token\n\n")
+        continue
 
     command = f"cd '{directory}'; {settings.node_path} scripts/foodtruck.mjs list '{date}' {settings.meal_type} {settings.location}"
     dishes_day = sp.run(command, capture_output=True, shell=True).stdout.decode()
@@ -91,6 +96,6 @@ for _ in range(7):
 preparing_dishes_file.close()
 updates.close()
 
-# sp.run(f"cd '{directory}'; '{settings.open_path}' '{settings.updates_path}'", shell=True)
+sp.run(f"cd '{directory}'; '{settings.open_path}' '{settings.updates_path}'", shell=True)
 
 
