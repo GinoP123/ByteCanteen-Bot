@@ -41,5 +41,4 @@ https://www.sublimetext.com/download
 # Finishing Installation
 ```
 ./installer.sh
-./place_orders.py
 ```
