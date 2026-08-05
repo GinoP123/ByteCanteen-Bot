@@ -1,5 +1,6 @@
 # Downloading Repo
 ```
+cd $HOME
 git clone https://github.com/GinoP123/ByteCanteen-Bot.git
 cd ByteCanteen-Bot
 unzip scripts.zip
@@ -10,11 +11,6 @@ unzip scripts.zip
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
-```
-
-# Installing git (if not installed)
-```
-brew install git
 ```
 
 # Installing Node
